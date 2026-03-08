@@ -82,6 +82,9 @@ export const Projects = () => {
                   </div>
                   <h4 className="font-semibold mb-2 group-hover:text-primary transition-colors">{project.title}</h4>
                   <p className="text-muted-foreground text-sm mb-4">{project.description}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((tech) => (<span key={tech} className="font-mono text-xs text-muted-foreground">{tech}</span>))}
+                  </div>
                   </div>
                 </div>
               ))}
