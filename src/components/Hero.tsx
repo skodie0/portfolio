@@ -59,9 +59,9 @@ export const Hero = () => {
           </div>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-float">
-          <a href="#about" className="text-muted-foreground hover:text-primary transition-colors"><ArrowDown size={24} /></a>
-        </div>
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 animate-float">
+        <a href="#about" className="text-muted-foreground hover:text-primary transition-colors"><ArrowDown size={24} /></a>
+      </div>
       </div>
     </section>
   );
