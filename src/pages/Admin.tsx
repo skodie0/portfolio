@@ -197,6 +197,49 @@ const Admin = () => {
             <SectionHeader title="🏠 Hero Section" section="hero" />
             {openSection === "hero" && (
               <div className="px-6 pb-6 space-y-4">
+                {/* Background Image Upload */}
+                <div>
+                  <label className={labelClass}>Background Image</label>
+                  <div className="flex items-center gap-4">
+                    {hero.bgImageUrl ? (
+                      <div className="relative w-40 h-24 rounded-lg overflow-hidden border border-border">
+                        <img src={hero.bgImageUrl} alt="Hero background" className="w-full h-full object-cover" />
+                      </div>
+                    ) : (
+                      <div className="w-40 h-24 rounded-lg border border-dashed border-border flex items-center justify-center text-muted-foreground">
+                        <Image size={24} />
+                      </div>
+                    )}
+                    <div className="flex flex-col gap-2">
+                      <label className="cursor-pointer">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={async (e) => {
+                            const file = e.target.files?.[0];
+                            if (!file) return;
+                            try {
+                              toast.info("Uploading image...");
+                              const storageRef = ref(storage, `images/hero-bg-${Date.now()}`);
+                              await uploadBytes(storageRef, file);
+                              const url = await getDownloadURL(storageRef);
+                              setHero({ ...hero, bgImageUrl: url });
+                              toast.success("Image uploaded! Click Save to apply.");
+                            } catch (err) {
+                              console.error(err);
+                              toast.error("Failed to upload image");
+                            }
+                          }}
+                        />
+                        <span className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary text-sm font-medium hover:bg-secondary/80 transition-colors">
+                          <Upload size={14} /> Upload New Image
+                        </span>
+                      </label>
+                      <p className="text-xs text-muted-foreground">Recommended: 1920×1080 or larger</p>
+                    </div>
+                  </div>
+                </div>
                 <div>
                   <label className={labelClass}>Name</label>
                   <input className={inputClass} value={hero.name} onChange={(e) => setHero({ ...hero, name: e.target.value })} />
