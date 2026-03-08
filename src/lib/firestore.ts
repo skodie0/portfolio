@@ -9,6 +9,7 @@ export interface HeroData {
   githubUrl: string;
   linkedinUrl: string;
   email: string;
+  bgImageUrl?: string;
 }
 
 export interface AboutData {

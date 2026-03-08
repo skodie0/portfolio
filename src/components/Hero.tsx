@@ -16,10 +16,11 @@ const fallback: HeroData = {
 
 export const Hero = () => {
   const { data } = useSiteData<HeroData>("hero", fallback);
+  const bgImage = data.bgImageUrl || heroBg;
 
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
-      <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${heroBg})` }} />
+      <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${bgImage})` }} />
       <div className="absolute inset-0 bg-background/80 dark:bg-background/70" />
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-glow" />
