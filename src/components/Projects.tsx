@@ -69,7 +69,13 @@ export const Projects = () => {
             <h3 className="text-xl font-semibold text-center mb-8">Other Noteworthy Projects</h3>
             <div className="grid md:grid-cols-2 gap-4">
               {data.other.map((project) => (
-                <div key={project.title} className="glass-card rounded-xl p-6 hover:border-primary/50 hover:-translate-y-1 transition-all duration-300 group">
+                <div key={project.title} className="glass-card rounded-xl overflow-hidden hover:border-primary/50 hover:-translate-y-1 transition-all duration-300 group">
+                  {project.imageUrl && (
+                    <div className="aspect-video overflow-hidden">
+                      <img src={project.imageUrl} alt={project.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    </div>
+                  )}
+                  <div className="p-6">
                   <div className="flex items-start justify-between mb-4">
                     <Folder className="text-primary" size={28} />
                     <a href={project.github} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors"><Github size={20} /></a>
