@@ -418,6 +418,37 @@ const Admin = () => {
                           setProjects({ ...projects, featured: projects.featured.filter((_, j) => j !== i) });
                         }}><Trash2 size={16} /></Button>
                       </div>
+                      {/* Project Image Upload */}
+                      <div className="flex items-center gap-3">
+                        {proj.imageUrl ? (
+                          <div className="relative w-32 h-20 rounded-lg overflow-hidden border border-border shrink-0">
+                            <img src={proj.imageUrl} alt={proj.title} className="w-full h-full object-cover" />
+                          </div>
+                        ) : (
+                          <div className="w-32 h-20 rounded-lg border border-dashed border-border flex items-center justify-center text-muted-foreground shrink-0">
+                            <Image size={20} />
+                          </div>
+                        )}
+                        <label className="cursor-pointer">
+                          <input type="file" accept="image/*" className="hidden" onChange={async (e) => {
+                            const file = e.target.files?.[0];
+                            if (!file) return;
+                            try {
+                              toast.info("Uploading...");
+                              const storageRef = ref(storage, `images/project-featured-${i}-${Date.now()}`);
+                              await uploadBytes(storageRef, file);
+                              const url = await getDownloadURL(storageRef);
+                              const updated = [...projects.featured];
+                              updated[i] = { ...proj, imageUrl: url };
+                              setProjects({ ...projects, featured: updated });
+                              toast.success("Image uploaded! Click Save to apply.");
+                            } catch { toast.error("Upload failed"); }
+                          }} />
+                          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-secondary text-xs font-medium hover:bg-secondary/80 transition-colors">
+                            <Upload size={12} /> Upload Image
+                          </span>
+                        </label>
+                      </div>
                       <textarea className={inputClass + " resize-none"} rows={2} placeholder="Description" value={proj.description} onChange={(e) => {
                         const updated = [...projects.featured];
                         updated[i] = { ...proj, description: e.target.value };
@@ -460,6 +491,37 @@ const Admin = () => {
                         <Button variant="ghost" size="icon" className="shrink-0 text-destructive ml-2" onClick={() => {
                           setProjects({ ...projects, other: projects.other.filter((_, j) => j !== i) });
                         }}><Trash2 size={16} /></Button>
+                      </div>
+                      {/* Project Image Upload */}
+                      <div className="flex items-center gap-3">
+                        {proj.imageUrl ? (
+                          <div className="relative w-32 h-20 rounded-lg overflow-hidden border border-border shrink-0">
+                            <img src={proj.imageUrl} alt={proj.title} className="w-full h-full object-cover" />
+                          </div>
+                        ) : (
+                          <div className="w-32 h-20 rounded-lg border border-dashed border-border flex items-center justify-center text-muted-foreground shrink-0">
+                            <Image size={20} />
+                          </div>
+                        )}
+                        <label className="cursor-pointer">
+                          <input type="file" accept="image/*" className="hidden" onChange={async (e) => {
+                            const file = e.target.files?.[0];
+                            if (!file) return;
+                            try {
+                              toast.info("Uploading...");
+                              const storageRef = ref(storage, `images/project-other-${i}-${Date.now()}`);
+                              await uploadBytes(storageRef, file);
+                              const url = await getDownloadURL(storageRef);
+                              const updated = [...projects.other];
+                              updated[i] = { ...proj, imageUrl: url };
+                              setProjects({ ...projects, other: updated });
+                              toast.success("Image uploaded! Click Save to apply.");
+                            } catch { toast.error("Upload failed"); }
+                          }} />
+                          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-secondary text-xs font-medium hover:bg-secondary/80 transition-colors">
+                            <Upload size={12} /> Upload Image
+                          </span>
+                        </label>
                       </div>
                       <textarea className={inputClass + " resize-none"} rows={2} placeholder="Description" value={proj.description} onChange={(e) => {
                         const updated = [...projects.other];

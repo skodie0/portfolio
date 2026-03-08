@@ -35,12 +35,16 @@ export const Projects = () => {
               <div key={project.title} className={`grid lg:grid-cols-2 gap-8 items-center ${index % 2 === 1 ? "lg:direction-rtl" : ""}`}>
                 <div className={`relative group ${index % 2 === 1 ? "lg:order-2" : ""}`}>
                   <div className="aspect-video rounded-xl overflow-hidden bg-gradient-to-br from-primary/20 via-secondary to-card border border-border/50 group-hover:border-primary/50 transition-all duration-500">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="text-center">
-                        <div className="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4"><Folder className="text-primary" size={32} /></div>
-                        <span className="font-mono text-muted-foreground text-sm">{project.title}</span>
+                    {project.imageUrl ? (
+                      <img src={project.imageUrl} alt={project.title} className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="text-center">
+                          <div className="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4"><Folder className="text-primary" size={32} /></div>
+                          <span className="font-mono text-muted-foreground text-sm">{project.title}</span>
+                        </div>
                       </div>
-                    </div>
+                    )}
                     <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   </div>
                 </div>
@@ -65,7 +69,13 @@ export const Projects = () => {
             <h3 className="text-xl font-semibold text-center mb-8">Other Noteworthy Projects</h3>
             <div className="grid md:grid-cols-2 gap-4">
               {data.other.map((project) => (
-                <div key={project.title} className="glass-card rounded-xl p-6 hover:border-primary/50 hover:-translate-y-1 transition-all duration-300 group">
+                <div key={project.title} className="glass-card rounded-xl overflow-hidden hover:border-primary/50 hover:-translate-y-1 transition-all duration-300 group">
+                  {project.imageUrl && (
+                    <div className="aspect-video overflow-hidden">
+                      <img src={project.imageUrl} alt={project.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    </div>
+                  )}
+                  <div className="p-6">
                   <div className="flex items-start justify-between mb-4">
                     <Folder className="text-primary" size={28} />
                     <a href={project.github} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors"><Github size={20} /></a>
@@ -74,6 +84,7 @@ export const Projects = () => {
                   <p className="text-muted-foreground text-sm mb-4">{project.description}</p>
                   <div className="flex flex-wrap gap-2">
                     {project.tech.map((tech) => (<span key={tech} className="font-mono text-xs text-muted-foreground">{tech}</span>))}
+                  </div>
                   </div>
                 </div>
               ))}

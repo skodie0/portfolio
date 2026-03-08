@@ -34,6 +34,7 @@ export interface FeaturedProject {
   tech: string[];
   github: string;
   live: string;
+  imageUrl?: string;
 }
 
 export interface OtherProject {
@@ -41,6 +42,7 @@ export interface OtherProject {
   description: string;
   tech: string[];
   github: string;
+  imageUrl?: string;
 }
 
 export interface ProjectsData {
