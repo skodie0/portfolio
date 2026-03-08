@@ -58,10 +58,10 @@ export const Hero = () => {
             <a href={`mailto:${data.email}`} className="text-muted-foreground hover:text-primary transition-colors duration-300"><Mail size={24} /></a>
           </div>
         </div>
-
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 animate-float">
-        <a href="#about" className="text-muted-foreground hover:text-primary transition-colors"><ArrowDown size={24} /></a>
       </div>
+
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 animate-float">
+        <a href="#about" className="text-muted-foreground hover:text-primary transition-colors"><ArrowDown size={24} /></a>
       </div>
     </section>
   );
