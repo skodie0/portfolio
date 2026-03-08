@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { LogOut, Save, Plus, Trash2, ChevronDown, ChevronUp } from "lucide-react";
+import { LogOut, Save, Plus, Trash2, ChevronDown, ChevronUp, Upload, Image } from "lucide-react";
+import { storage } from "@/lib/firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import {
   getSectionData,
   setSectionData,
