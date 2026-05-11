@@ -1,73 +1,94 @@
-# Welcome to your Lovable project
+# ☕ Code & Coffee Portfolio
 
-## Project info
+A modern, Firebase-powered developer portfolio built with React, TypeScript, Vite, shadcn/ui, and Tailwind CSS. Content is managed dynamically via Firestore, with an admin panel for real-time updates.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## 🚀 Live Site
 
-## How can I edit this code?
+Deployed to GitHub Pages: [https://skodi.github.io/portfolio/](https://skodi.github.io/portfolio/)
 
-There are several ways of editing your application.
+## ✨ Features
 
-**Use Lovable**
+- 🌗 Light / Dark mode toggle
+- 🔥 Firebase Firestore for dynamic content (hero, about, projects, skills, contact)
+- 🔐 Firebase Authentication for admin access
+- 📝 Admin panel to manage all portfolio sections
+- 📨 Contact form submission via Formspree
+- 📱 Fully responsive design
+- ⚡ Fast builds with Vite + Bun
+- 🚢 CI/CD via GitHub Actions → GitHub Pages
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## 🛠️ Tech Stack
 
-Changes made via Lovable will be committed automatically to this repo.
+| Layer | Technology |
+|---|---|
+| Framework | React 18 + TypeScript |
+| Build Tool | Vite |
+| Styling | Tailwind CSS + shadcn/ui |
+| Backend | Firebase (Firestore + Auth) |
+| Package Manager | Bun |
+| Deployment | GitHub Pages |
 
-**Use your preferred IDE**
+## 🏃 Getting Started
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Prerequisites
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- [Bun](https://bun.sh) installed
+- A Firebase project with Firestore and Authentication enabled
+- A [Formspree](https://formspree.io) form endpoint for contact submissions
 
-Follow these steps:
+### Installation
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# 1. Clone the repository
+git clone https://github.com/skodi/code-coffee-portfolio.git
+cd code-coffee-portfolio
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# 2. Install dependencies
+bun install
 
-# Step 3: Install the necessary dependencies.
-npm i
+# 3. Set up environment variables
+cp .env.example .env
+# Fill in your Firebase config values in .env
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+# 4. Start the development server
+bun run dev
 ```
 
-**Edit a file directly in GitHub**
+### Environment Variables
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Create a `.env` file at the project root with the following keys:
 
-**Use GitHub Codespaces**
+```env
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+VITE_FIREBASE_PROJECT_ID=
+VITE_FIREBASE_STORAGE_BUCKET=
+VITE_FIREBASE_MESSAGING_SENDER_ID=
+VITE_FIREBASE_APP_ID=
+VITE_FORMSPREE_ENDPOINT=
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 📦 Deployment
 
-## What technologies are used for this project?
+Pushes to the `main` branch automatically build and deploy to GitHub Pages via the included GitHub Actions workflow (`.github/workflows/deploy.yml`).
 
-This project is built with:
+For this exact URL to work, the GitHub repository name must be `portfolio`.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Add the Firebase environment variables above as **repository secrets** in **Settings → Secrets and variables → Actions**.
 
-## How can I deploy this project?
+## 📁 Project Structure
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+```
+src/
+├── assets/          # Static images
+├── components/      # UI sections (Hero, About, Projects, Skills, Contact, …)
+│   └── ui/          # shadcn/ui primitives
+├── contexts/        # Auth context
+├── hooks/           # Custom hooks (useSiteData, …)
+├── lib/             # Firebase config & Firestore helpers
+└── pages/           # Route pages (Index, Admin, Login, NotFound)
+```
 
-## Can I connect a custom domain to my Lovable project?
+## 📄 License
 
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+MIT

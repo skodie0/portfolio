@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { LogOut, Save, Plus, Trash2, ChevronDown, ChevronUp, Upload, Image } from "lucide-react";
@@ -176,7 +176,7 @@ const Admin = () => {
       <div className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
         <div className="container mx-auto px-6 flex items-center justify-between h-16">
           <div className="flex items-center gap-4">
-            <a href="/" className="font-mono text-lg font-semibold text-primary">{"<"}dev{" />"}</a>
+            <Link to="/" className="font-mono text-lg font-semibold text-primary">{"<"}dev{" />"}</Link>
             <span className="text-sm text-muted-foreground">Admin Dashboard</span>
           </div>
           <div className="flex items-center gap-4">

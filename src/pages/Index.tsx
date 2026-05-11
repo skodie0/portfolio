@@ -5,8 +5,14 @@ import { Skills } from "@/components/Skills";
 import { Projects } from "@/components/Projects";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
+import { PageLoader } from "@/components/PageLoader";
+import { useSiteReady } from "@/hooks/useSiteReady";
 
 const Index = () => {
+  const ready = useSiteReady();
+
+  if (!ready) return <PageLoader />;
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />

@@ -5,16 +5,46 @@ import { toast } from "sonner";
 import { useSiteData } from "@/hooks/useSiteData";
 import type { ContactData } from "@/lib/firestore";
 
-const fallback: ContactData = { email: "alex@example.com", location: "San Francisco, CA" };
+const fallback: ContactData = { email: "samuelmkodie@gmail.com", location: "Accra, Ghana" };
 
 export const Contact = () => {
   const { data } = useSiteData<ContactData>("contact", fallback);
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const formspreeEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Message sent! I'll get back to you soon.");
-    setFormData({ name: "", email: "", message: "" });
+
+    if (!formspreeEndpoint) {
+      toast.error("Contact form is not configured yet. Please try again later.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const response = await fetch(formspreeEndpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        toast.error("Unable to send your message right now. Please try again.");
+        return;
+      }
+
+      toast.success("Message sent! I'll get back to you soon.");
+      setFormData({ name: "", email: "", message: "" });
+    } catch (error) {
+      console.error("Error submitting contact form:", error);
+      toast.error("Unable to send your message right now. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -73,7 +103,9 @@ export const Contact = () => {
                 <label htmlFor="message" className="block text-sm font-medium mb-2">Message</label>
                 <textarea id="message" name="message" value={formData.message} onChange={handleChange} required rows={5} className="w-full px-4 py-3 rounded-lg bg-card border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none text-foreground placeholder:text-muted-foreground" placeholder="Tell me about your project..." />
               </div>
-              <Button type="submit" variant="hero" size="lg" className="w-full"><Send size={18} /> Send Message</Button>
+              <Button type="submit" variant="hero" size="lg" className="w-full" disabled={isSubmitting}>
+                <Send size={18} /> {isSubmitting ? "Sending..." : "Send Message"}
+              </Button>
             </form>
           </div>
         </div>

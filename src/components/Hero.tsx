@@ -1,17 +1,17 @@
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import heroBg from "@/assets/hero-bg.png";
+import heroBg from "@/assets/hero-bg-1.jpeg";
 import { useSiteData } from "@/hooks/useSiteData";
 import type { HeroData } from "@/lib/firestore";
 
 const fallback: HeroData = {
-  name: "Alex Chen",
+  name: "Samuel Kodie",
   role: "Fullstack Software Engineer",
   description: "I craft elegant digital experiences with clean code and modern technologies. Passionate about building scalable applications that make a difference.",
   statusText: "Available for new opportunities",
   githubUrl: "https://github.com",
   linkedinUrl: "https://linkedin.com",
-  email: "alex@example.com",
+  email: "samuelmkodie@gmail.com",
 };
 
 export const Hero = () => {

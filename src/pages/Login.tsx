@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Lock, Mail } from "lucide-react";
@@ -30,9 +30,9 @@ const Login = () => {
     <div className="min-h-screen bg-background flex items-center justify-center px-6">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <a href="/" className="font-mono text-2xl font-semibold text-primary inline-block mb-4">
+          <Link to="/" className="font-mono text-2xl font-semibold text-primary inline-block mb-4">
             {"<"}dev{" />"}
-          </a>
+          </Link>
           <h1 className="text-2xl font-bold">Admin Login</h1>
           <p className="text-muted-foreground text-sm mt-2">Sign in to manage your portfolio</p>
         </div>
