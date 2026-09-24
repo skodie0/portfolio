@@ -1,8 +1,8 @@
-import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroBg from "@/assets/hero-bg-1.jpeg";
 import { useSiteData } from "@/hooks/useSiteData";
-import type { HeroData } from "@/lib/firestore";
+import type { ContactData, HeroData } from "@/lib/firestore";
 
 const fallback: HeroData = {
   name: "Samuel Kodie",
@@ -14,54 +14,82 @@ const fallback: HeroData = {
   email: "samuelmkodie@gmail.com",
 };
 
+const contactFallback: ContactData = { email: "samuelmkodie@gmail.com", location: "Accra, Ghana" };
+
+const socialClass =
+  "inline-flex h-11 w-11 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary hover:text-primary";
+
+const imageMask = {
+  WebkitMaskImage:
+    "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.08) 8%, rgba(0,0,0,0.28) 18%, rgba(0,0,0,0.55) 30%, rgba(0,0,0,0.82) 42%, #000 56%, #000 100%)",
+  maskImage:
+    "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.08) 8%, rgba(0,0,0,0.28) 18%, rgba(0,0,0,0.55) 30%, rgba(0,0,0,0.82) 42%, #000 56%, #000 100%)",
+};
+
+const splitName = (name: string) => {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length < 2) return { first: name.trim(), last: "" };
+  return { first: parts.slice(0, -1).join(" "), last: parts[parts.length - 1] };
+};
+
 export const Hero = () => {
   const { data } = useSiteData<HeroData>("hero", fallback);
+  const { data: contact } = useSiteData<ContactData>("contact", contactFallback);
   const bgImage = data.bgImageUrl || heroBg;
+  const { first, last } = splitName(data.name);
+  const place = contact.location?.split(",")[0]?.trim();
 
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
-      <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${bgImage})` }} />
-      <div className="absolute inset-0 bg-background/80 dark:bg-background/70" />
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-glow" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary/5 rounded-full blur-3xl animate-pulse-glow" style={{ animationDelay: "1.5s" }} />
+    <section id="top" className="relative flex min-h-[100svh] items-end overflow-hidden pb-16 pt-24 sm:items-center sm:pb-0 sm:pt-20">
+      <div className="absolute right-0 top-0 h-full w-full sm:w-[78vw]" style={imageMask}>
+        <img src={bgImage} alt="" className="h-full w-full object-cover object-[center_18%]" />
       </div>
+      <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-[58%] bg-gradient-to-r from-background from-0% via-background/80 via-40% to-transparent sm:block" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background via-background/75 to-background/25 sm:hidden" />
 
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/50 border border-border/50 mb-8 animate-fade-in">
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <span className="font-mono text-sm text-muted-foreground">{data.statusText}</span>
-          </div>
-
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-slide-up" style={{ animationDelay: "0.1s" }}>
-            Hi, I'm <span className="gradient-text">{data.name}</span>
-            <span className="terminal-cursor text-primary">_</span>
-          </h1>
-
-          <p className="text-xl md:text-2xl text-muted-foreground mb-4 animate-slide-up" style={{ animationDelay: "0.2s" }}>
+      <div className="container relative z-10 mx-auto w-full px-6">
+        <div className="max-w-xl animate-slide-up">
+          <p className="mb-4 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-primary">
             {data.role}
+            {place ? ` · ${place}` : ""}
           </p>
+          <h1 className="text-[clamp(2.6rem,6.5vw,4.75rem)] font-semibold leading-[1.02] tracking-tight">
+            {first}
+            {last ? <span className="block text-primary">{last}</span> : null}
+          </h1>
+          <p className="mt-5 max-w-md text-base leading-relaxed text-muted-foreground sm:text-lg">{data.description}</p>
 
-          <p className="text-base md:text-lg text-muted-foreground/80 max-w-xl mx-auto mb-10 animate-slide-up" style={{ animationDelay: "0.3s" }}>
-            {data.description}
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 animate-slide-up" style={{ animationDelay: "0.4s" }}>
-            <Button variant="hero" size="lg" asChild><a href="#projects">View My Work</a></Button>
-            <Button variant="hero-outline" size="lg" asChild><a href="#contact">Get In Touch</a></Button>
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <Button variant="hero" size="lg" className="rounded-full px-6 hover:scale-100" asChild>
+              <a href="#projects">
+                View projects
+                <ArrowRight size={16} />
+              </a>
+            </Button>
+            <Button variant="ghost" size="lg" className="rounded-full" asChild>
+              <a href="#contact">Contact</a>
+            </Button>
           </div>
 
-          <div className="flex items-center justify-center gap-6 animate-slide-up" style={{ animationDelay: "0.5s" }}>
-            <a href={data.githubUrl} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors duration-300"><Github size={24} /></a>
-            <a href={data.linkedinUrl} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors duration-300"><Linkedin size={24} /></a>
-            <a href={`mailto:${data.email}`} className="text-muted-foreground hover:text-primary transition-colors duration-300"><Mail size={24} /></a>
+          <div className="mt-10 flex flex-wrap items-center gap-4">
+            <a href={data.githubUrl} target="_blank" rel="noopener noreferrer" className={socialClass} aria-label="GitHub">
+              <Github size={16} />
+            </a>
+            <a href={data.linkedinUrl} target="_blank" rel="noopener noreferrer" className={socialClass} aria-label="LinkedIn">
+              <Linkedin size={16} />
+            </a>
+            <a href={`mailto:${data.email}`} className={socialClass} aria-label="Email">
+              <Mail size={16} />
+            </a>
+            <span className="ml-1 flex items-center gap-2 font-mono text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-50" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
+              </span>
+              {data.statusText}
+            </span>
           </div>
         </div>
-      </div>
-
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 animate-float">
-        <a href="#about" className="text-muted-foreground hover:text-primary transition-colors"><ArrowDown size={24} /></a>
       </div>
     </section>
   );

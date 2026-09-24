@@ -54,12 +54,19 @@ export const Contact = () => {
   return (
     <section id="contact" className="py-24 md:py-32 relative bg-secondary/20">
       <div className="container mx-auto px-6">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="font-mono text-primary text-sm mb-4 block">{"// get in touch"}</span>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Let's Work <span className="gradient-text">Together</span></h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">Have a project in mind or just want to chat? Feel free to reach out.</p>
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
+          <div>
+            <p className="font-mono text-xs text-primary mb-2">04 — contact.sh</p>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
+              Let's Work <span className="gradient-text">Together</span>
+            </h2>
           </div>
+          <p className="text-sm text-muted-foreground max-w-sm md:text-right">
+            Have a project in mind or just want to chat? Feel free to reach out.
+          </p>
+        </div>
+
+        <div className="max-w-4xl mx-auto">
 
           <div className="grid md:grid-cols-5 gap-12">
             <div className="md:col-span-2 space-y-8">

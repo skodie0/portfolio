@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Lock, Mail } from "lucide-react";
+import { EditorFrame } from "@/components/EditorFrame";
 
 const Login = () => {
   const { login } = useAuth();
@@ -27,17 +28,19 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-6">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <Link to="/" className="font-mono text-2xl font-semibold text-primary inline-block mb-4">
-            {"<"}dev{" />"}
+    <div className="relative min-h-screen bg-background flex items-center justify-center px-6">
+      <div aria-hidden className="pointer-events-none fixed inset-0 dot-grid" />
+      <div className="relative w-full max-w-md">
+        <div className="mb-6">
+          <Link to="/" className="font-mono text-sm font-semibold text-primary">
+            ~/dev
           </Link>
-          <h1 className="text-2xl font-bold">Admin Login</h1>
-          <p className="text-muted-foreground text-sm mt-2">Sign in to manage your portfolio</p>
+          <h1 className="text-2xl font-bold mt-3">Admin Login</h1>
+          <p className="text-muted-foreground text-sm mt-1">Sign in to manage your portfolio</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="glass-card rounded-xl p-8 space-y-6">
+        <EditorFrame title="auth.ts" bodyClassName="p-0">
+        <form onSubmit={handleSubmit} className="p-6 space-y-6">
           <div>
             <label className="block text-sm font-medium mb-2">Email</label>
             <div className="relative">
@@ -68,10 +71,11 @@ const Login = () => {
             </div>
           </div>
 
-          <Button type="submit" variant="hero" size="lg" className="w-full" disabled={loading}>
+          <Button type="submit" variant="hero" size="lg" className="w-full font-mono hover:scale-100" disabled={loading}>
             {loading ? "Signing in..." : "Sign In"}
           </Button>
         </form>
+        </EditorFrame>
       </div>
     </div>
   );

@@ -106,10 +106,6 @@
     --sidebar-ring: 174 72% 56%;
   }
 
-  .dark {
-    --background: 220 20% 6%;
-    --foreground: 210 40% 98%;
-  }
 }
 
 @layer base {
@@ -119,6 +115,7 @@
 
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
   }
 
   body {
@@ -219,4 +216,27 @@
   .animate-steam-1 { animation: steam 2s ease-in-out infinite; }
   .animate-steam-2 { animation: steam 2s ease-in-out infinite 0.4s; }
   .animate-steam-3 { animation: steam 2s ease-in-out infinite 0.8s; }
+
+  .dot-grid {
+    background-image: radial-gradient(hsl(var(--foreground) / 0.07) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  .code-string {
+    @apply text-emerald-700 dark:text-emerald-400;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fade-in,
+    .animate-slide-up,
+    .animate-float,
+    .animate-steam-1,
+    .animate-steam-2,
+    .animate-steam-3,
+    .terminal-cursor {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
 }

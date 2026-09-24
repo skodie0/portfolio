@@ -1,4 +1,5 @@
 import { Code2, Coffee, Rocket, Users, LucideIcon } from "lucide-react";
+import { EditorFrame } from "@/components/EditorFrame";
 import { useSiteData } from "@/hooks/useSiteData";
 import type { AboutData } from "@/lib/firestore";
 
@@ -23,53 +24,61 @@ export const About = () => {
   const { data } = useSiteData<AboutData>("about", fallback);
 
   return (
-    <section id="about" className="py-24 md:py-32 relative">
+    <section id="about" className="py-20 md:py-28 border-t border-border/50">
       <div className="container mx-auto px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="font-mono text-primary text-sm mb-4 block">{"// about me"}</span>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
+          <div>
+            <p className="font-mono text-xs text-primary mb-2">01 — about.md</p>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
               Turning Ideas Into <span className="gradient-text">Reality</span>
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              A passionate fullstack developer who loves creating impactful digital solutions
-            </p>
+          </div>
+          <p className="text-sm text-muted-foreground max-w-sm md:text-right">
+            A passionate fullstack developer who loves creating impactful digital solutions
+          </p>
+        </div>
+
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+          <div className="lg:col-span-5 lg:sticky lg:top-24">
+            <EditorFrame title="developer.ts">
+              <pre className="font-mono text-[13px] leading-7 whitespace-pre-wrap text-muted-foreground">
+                <span className="text-primary">const</span> developer = {"{\n"}
+                {"  "}name: <span className="code-string">"{data.codeBlock.name}"</span>,{"\n"}
+                {"  "}role: <span className="code-string">"{data.codeBlock.role}"</span>,{"\n"}
+                {"  "}loves: [
+                {data.codeBlock.loves.map((love, index) => (
+                  <span key={love}>
+                    <span className="code-string">"{love}"</span>
+                    {index < data.codeBlock.loves.length - 1 ? ", " : ""}
+                  </span>
+                ))}
+                ]{"\n"}
+                {"}"};
+              </pre>
+            </EditorFrame>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              {data.paragraphs.map((p, i) => (
-                <p key={i} className="text-muted-foreground leading-relaxed">{p}</p>
+          <div className="lg:col-span-7 space-y-8">
+            <div className="space-y-5 border-l-2 border-primary/40 pl-5">
+              {data.paragraphs.map((paragraph, index) => (
+                <p key={index} className="text-muted-foreground leading-relaxed">
+                  {paragraph}
+                </p>
               ))}
-
-              <div className="bg-secondary/50 rounded-lg p-4 border border-border/50 font-mono text-sm">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="w-3 h-3 rounded-full bg-destructive/70" />
-                  <span className="w-3 h-3 rounded-full bg-yellow-500/70" />
-                  <span className="w-3 h-3 rounded-full bg-green-500/70" />
-                </div>
-                <code className="text-muted-foreground">
-                  <span className="text-primary">const</span> developer = {"{"}<br />
-                  <span className="pl-4">name: <span className="text-green-400">"{data.codeBlock.name}"</span>,</span><br />
-                  <span className="pl-4">role: <span className="text-green-400">"{data.codeBlock.role}"</span>,</span><br />
-                  <span className="pl-4">loves: [{data.codeBlock.loves.map((l, i) => (
-                    <span key={i}><span className="text-green-400">"{l}"</span>{i < data.codeBlock.loves.length - 1 ? ", " : ""}</span>
-                  ))}]</span><br />
-                  {"}"};
-                </code>
-              </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              {data.highlights.map((item, index) => {
+            <div className="grid sm:grid-cols-2 gap-px overflow-hidden rounded-xl border border-border/70 bg-border/70">
+              {data.highlights.map((item) => {
                 const Icon = iconMap[item.icon] || Code2;
                 return (
-                  <div key={item.title} className="glass-card rounded-xl p-6 text-center hover:border-primary/50 transition-all duration-300 group" style={{ animationDelay: `${index * 0.1}s` }}>
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
-                      <Icon className="text-primary" size={24} />
+                  <div key={item.title} className="bg-card/80 p-5 flex gap-4 items-start">
+                    <div className="w-9 h-9 rounded-md bg-primary/10 flex items-center justify-center shrink-0">
+                      <Icon className="text-primary" size={18} />
                     </div>
-                    <h3 className="font-bold text-xl mb-1">{item.title}</h3>
-                    <p className="text-muted-foreground text-sm">{item.description}</p>
+                    <div>
+                      <h3 className="font-semibold">{item.title}</h3>
+                      <p className="text-muted-foreground text-sm mt-0.5">{item.description}</p>
+                    </div>
                   </div>
                 );
               })}

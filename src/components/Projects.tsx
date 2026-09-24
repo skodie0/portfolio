@@ -23,12 +23,19 @@ export const Projects = () => {
   return (
     <section id="projects" className="py-24 md:py-32 relative">
       <div className="container mx-auto px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="font-mono text-primary text-sm mb-4 block">{"// featured work"}</span>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Things I've <span className="gradient-text">Built</span></h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">A selection of projects that showcase my skills and passion for development</p>
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
+          <div>
+            <p className="font-mono text-xs text-primary mb-2">03 — projects/</p>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
+              Things I've <span className="gradient-text">Built</span>
+            </h2>
           </div>
+          <p className="text-sm text-muted-foreground max-w-sm md:text-right">
+            A selection of projects that showcase my skills and passion for development
+          </p>
+        </div>
+
+        <div className="max-w-6xl mx-auto">
 
           <div className="space-y-24 mb-24">
             {data.featured.map((project, index) => (

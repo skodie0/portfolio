@@ -63,7 +63,7 @@ export const PageLoader = () => {
       {/* Label */}
       <div className="flex flex-col items-center gap-2">
         <span className="font-mono text-primary text-sm tracking-widest animate-pulse">
-          loading...
+          $ compiling portfolio
         </span>
         {/* Progress dots */}
         <div className="flex gap-1.5">
